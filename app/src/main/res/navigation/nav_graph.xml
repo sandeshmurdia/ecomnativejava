@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.example.ecommerceapp.ui.home.HomeFragment"
+        android:label="Home" />
+
+    <fragment
+        android:id="@+id/wishlistFragment"
+        android:name="com.example.ecommerceapp.ui.wishlist.WishlistFragment"
+        android:label="Wishlist" />
+
+    <fragment
+        android:id="@+id/cartFragment"
+        android:name="com.example.ecommerceapp.ui.cart.CartFragment"
+        android:label="Cart" />
+
+</navigation> 
