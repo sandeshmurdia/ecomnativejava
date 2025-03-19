@@ -12,6 +12,7 @@ import com.example.ecommerceapp.R
 import com.example.ecommerceapp.databinding.FragmentCheckoutBinding
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
+import com.zipy.zipyandroid.Zipy
 
 @AndroidEntryPoint
 class CheckoutFragment : Fragment() {
@@ -74,36 +75,43 @@ class CheckoutFragment : Fragment() {
     private fun validateFields(): Boolean {
         var isValid = true
         
-        // Validate name
-        binding.root.findViewWithTag<View>("name_input")?.let {
-            if (it.toString().isEmpty()) {
-                showError("Please enter your name")
-                isValid = false
+        try {
+            // Validate name
+            binding.root.findViewWithTag<View>("name_input")?.let {
+                if (it.toString().isEmpty()) {
+                    showError("Please enter your name")
+                    isValid = false
+                    Zipy.logError("Checkout validation failed: Name empty")
+                }
             }
-        }
 
-        // Validate address
-        binding.root.findViewWithTag<View>("address_input")?.let {
-            if (it.toString().isEmpty()) {
-                showError("Please enter your address")
-                isValid = false
+            // Validate address
+            binding.root.findViewWithTag<View>("address_input")?.let {
+                if (it.toString().isEmpty()) {
+                    showError("Please enter your address")
+                    isValid = false
+                    Zipy.logError("Checkout validation failed: Address empty")
+                }
             }
-        }
 
-        // Validate city
-        binding.root.findViewWithTag<View>("city_input")?.let {
-            if (it.toString().isEmpty()) {
-                showError("Please enter your city")
-                isValid = false
+            // Validate city
+            binding.root.findViewWithTag<View>("city_input")?.let {
+                if (it.toString().isEmpty()) {
+                    showError("Please enter your city")
+                    isValid = false
+                }
             }
-        }
 
-        // Validate ZIP code
-        binding.root.findViewWithTag<View>("zip_input")?.let {
-            if (it.toString().isEmpty()) {
-                showError("Please enter your ZIP code")
-                isValid = false
+            // Validate ZIP code
+            binding.root.findViewWithTag<View>("zip_input")?.let {
+                if (it.toString().isEmpty()) {
+                    showError("Please enter your ZIP code")
+                    isValid = false
+                }
             }
+        } catch (e: Exception) {
+            Zipy.logException("Checkout validation error", e)
+            isValid = false
         }
 
         return isValid
@@ -116,15 +124,37 @@ class CheckoutFragment : Fragment() {
             text = "Processing..."
         }
 
-        // Simulate order processing
-        view?.postDelayed({
-            binding.btnPlaceOrder.text = "Order Placed!"
-            showSuccessMessage()
-            // Navigate to order confirmation screen after delay
+        try {
+            // Log order processing start
+            val orderDetails = mapOf(
+                "subtotal" to binding.tvSubtotal.text.toString(),
+                "shipping" to binding.tvShipping.text.toString(),
+                "total" to binding.tvTotal.text.toString()
+            )
+            Zipy.logMessage("Order processing started", orderDetails)
+
+            // Simulate order processing
             view?.postDelayed({
-                findNavController().navigate(R.id.action_checkoutFragment_to_orderConfirmationFragment)
-            }, 1000)
-        }, 2000)
+                binding.btnPlaceOrder.text = "Order Placed!"
+                showSuccessMessage()
+                
+                // Log successful order placement
+                Zipy.logMessage("Order placed successfully", orderDetails)
+
+                // Navigate to order confirmation screen after delay
+                view?.postDelayed({
+                    findNavController().navigate(R.id.action_checkoutFragment_to_orderConfirmationFragment)
+                }, 1000)
+            }, 2000)
+        } catch (e: Exception) {
+            // Log order processing error
+            Zipy.logException("Order processing failed", e)
+            showError("Failed to process order. Please try again.")
+            binding.btnPlaceOrder.apply {
+                isEnabled = true
+                text = "Place Order"
+            }
+        }
     }
 
     private fun applyPromoCode(code: String) {
