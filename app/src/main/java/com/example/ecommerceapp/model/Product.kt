@@ -15,7 +15,7 @@ object SampleProducts {
     val products = listOf(
         Product(
             1,
-            "Classic White T-Shirt",
+            "White TShirt",
             "Premium cotton basic white t-shirt",
             29.99,
             "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab"
@@ -37,7 +37,7 @@ object SampleProducts {
         Product(
             4,
             "Casual Sneakers",
-            "White casual sneakers with comfort sole",
+            "White casual sneakers",
             89.99,
             "https://images.unsplash.com/photo-1549298916-b41d501d3772"
         ),
