@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
-    app:cardCornerRadius="8dp"
-    app:cardElevation="4dp">
+    app:cardCornerRadius="16dp"
+    app:cardElevation="4dp"
+    android:clickable="true"
+    android:focusable="true"
+    app:rippleColor="@android:color/darker_gray">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -20,15 +24,26 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:src="@tools:sample/backgrounds/scenic" />
 
-        <ImageButton
-            android:id="@+id/btnWishlist"
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/wishlistContainer"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_margin="8dp"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:src="@android:drawable/star_big_off"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="4dp"
+            app:cardBackgroundColor="@android:color/white"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageButton
+                android:id="@+id/btnWishlist"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:padding="8dp"
+                android:src="@android:drawable/star_big_off"
+                android:tint="#FFD700"/>
+        </com.google.android.material.card.MaterialCardView>
 
         <TextView
             android:id="@+id/tvName"
@@ -37,9 +52,11 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
-            android:textColor="@color/black"
-            android:textSize="16sp"
+            android:textColor="@android:color/black"
+            android:textSize="18sp"
             android:textStyle="bold"
+            android:maxLines="1"
+            android:ellipsize="end"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/ivProduct"
@@ -54,6 +71,9 @@
             android:layout_marginEnd="16dp"
             android:textColor="#757575"
             android:textSize="14sp"
+            android:maxLines="2"
+            android:ellipsize="end"
+            android:lineSpacingExtra="2dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvName"
@@ -64,10 +84,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="12dp"
             android:layout_marginBottom="16dp"
-            android:textColor="@color/black"
-            android:textSize="18sp"
+            android:textColor="@android:color/black"
+            android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -76,15 +96,19 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnAddToCart"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:text="Add to Cart"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:textAllCaps="false"
+            app:cornerRadius="24dp"
+            app:icon="@android:drawable/ic_input_add"
+            app:iconGravity="textStart"
+            app:iconTint="@android:color/white"
+            style="@style/Widget.MaterialComponents.Button"
+            app:layout_constraintBottom_toBottomOf="@id/tvPrice"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvPrice"
-            />
+            app:layout_constraintTop_toTopOf="@id/tvPrice" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
